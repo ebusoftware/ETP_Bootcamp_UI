@@ -14,13 +14,32 @@ export class ListProductsComponent implements OnInit {
      ){}
   
   products:ListProduct[]=null;
+  productPerPage:number=5;
+  selectedPage:number=1;
+  totalProductCount:number;
+
  async getProducts()
  {
-
-  const products:ListProduct[]= await this.productService.read(0,5,()=>console.log("başarılı işlem"),()=>console.log("hatalı işlem"));
+  const products:{ totalProductCount: number; products: ListProduct[]}= (await this.productService.read(this.selectedPage-1, this.productPerPage,()=>console.log("başarılı işlem"),()=>console.log("hatalı işlem")))
   
-  this.products=products;
+  this.products=products.products;
+  this.totalProductCount=products.totalProductCount
+  console.log(products.products);
   //TO DO list
+ }
+
+ get pageNumbers():number[]{
+   return Array(Math.ceil
+      (this.totalProductCount/this.productPerPage))
+      .fill(0)
+      .map((a,i)=>i+1)
+      
+ }
+
+ changePage(page:number){
+  this.selectedPage = page;
+  this.getProducts();
+
  }
 
  async ngOnInit(){

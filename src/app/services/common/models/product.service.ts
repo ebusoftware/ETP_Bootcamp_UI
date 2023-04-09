@@ -11,8 +11,8 @@ export class ProductService {
 
   constructor(private httpClientService:HttpClientService) { }
 
-  async read(page: number = 0, size: number = 5, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<ListProduct[]> {
-    const promiseData: Promise<ListProduct[]> = this.httpClientService.get<ListProduct[]>({
+  async read(page: number = 0, size: number = 5, successCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number; products: ListProduct[]}> {
+    const promiseData: Promise<{ totalProductCount: number; products: ListProduct[]}> = this.httpClientService.get<{ totalProductCount: number; products: ListProduct[]}>({
       controller: "product",
       queryString: `page=${page}&size=${size}`
     }).toPromise();

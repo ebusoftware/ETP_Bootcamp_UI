@@ -134,6 +134,4 @@ lerna-debug.log
 Thumbs.db
 
 #istenmeyen
-.css
-.js
-*.mp4
+/src/
